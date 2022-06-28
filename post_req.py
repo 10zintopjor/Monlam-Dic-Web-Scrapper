@@ -90,7 +90,7 @@ def filter_texts(word):
 
 
 def get_search_word():
-    file = open("dic_split_2.csv")
+    file = open("./dic/dic_split_2.csv")
     csvreader = csv.reader(file)
     do_bool = False
     for row in csvreader:
@@ -133,8 +133,6 @@ def main():
         except:
             err.info(search_word)
 
-        if index == 1000:
-            break
 
 def main_test():
     global var
@@ -147,5 +145,5 @@ def main_test():
         
 if __name__ == "__main__":
     start_time = time.time()
-    main_test()
+    main()
     print("--- %s seconds ---" % (time.time() - start_time))
