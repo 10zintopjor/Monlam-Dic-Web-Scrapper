@@ -1,4 +1,6 @@
 import sqlite3
+import time
+
 
 
 def get_pos(word):
@@ -12,7 +14,8 @@ def get_pos(word):
 
 
 
-
 if __name__ == "__main__":
-    pos = get_pos("ཀ་ཡེ་")
+    start_time = time.time()
+    pos = get_pos("ཨགྷཾ་")
     print(pos)
+    print(start_time-time.time())

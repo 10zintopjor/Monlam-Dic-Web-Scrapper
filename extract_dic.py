@@ -40,34 +40,34 @@ def insert_val():
         yield row
 
 def update():
-    for row in insert_val():
-        word,definition = row
-        pos = extract_pos(definition)
-        print(row)
-        if not pos:
-            continue    
-        try:
-            sqliteConnection = sqlite3.connect('test_database.db')
-            cursor = sqliteConnection.cursor()
-            sqlite_insert_with_param = """INSERT INTO word_pos (word,def) VALUES (?, ?);"""
-            data_tuple = (word,pos)
-            cursor.execute(sqlite_insert_with_param, data_tuple)
-            sqliteConnection.commit()
-            cursor.close()
-        except:
-            print(row)            
-0
+    with open("./alt.csv") as file:
+        csvreader = csv.reader(file)
+        for row in csvreader:
+            word1,word2 = row
+            try:
+                sqliteConnection = sqlite3.connect('alternatives.db')
+                cursor = sqliteConnection.cursor()
+                sqlite_insert_with_param = """INSERT INTO alt_word (word1,word2) VALUES (?, ?);"""
+                data_tuple = (word1,word2)
+                cursor.execute(sqlite_insert_with_param, data_tuple)
+                sqliteConnection.commit()
+                cursor.close()
+            except:
+                pass
+
 def create_db():
-    conn = sqlite3.connect('test_database.db') 
+    conn = sqlite3.connect('alternatives.db') 
     c = conn.cursor()
 
     c.execute('''
-            CREATE TABLE IF NOT EXISTS word_pos
-            ([word] TEXT PRIMARY KEY, [def] TEXT)
+            CREATE TABLE IF NOT EXISTS alt_word
+            ([word1] TEXT PRIMARY KEY, [word2] TEXT)
             ''')
               
     conn.commit()
 
 if __name__ == "__main__":
-    pos = get_pos("ཀ་ཡེ་")
-    print(pos)
+    create_db()
+    update()
+    """ pos = get_pos("ཀ་ཡེ་")
+    print(pos) """
